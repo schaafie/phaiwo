@@ -1,0 +1,27 @@
+#map {
+  background-color: aquamarine;
+}
+
+.vision {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.neurons {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.neuron {
+  display: block;
+  border: 1px solid gray;
+  background-color: aquamarine;
+  margin: 2px;
+  width: 15px;
+  height: 15px;
+}
+
+.active {
+  background-color: black;
+}
