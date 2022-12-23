@@ -13,7 +13,9 @@ defmodule Phaiwo.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Phaiwo.PubSub},
       # Start the Endpoint (http/https)
-      PhaiwoWeb.Endpoint
+      PhaiwoWeb.Endpoint,
+      # Start the World Supervisor //  prey and predator elements
+      Phaiwo.WorldSupervisor
       # Start a worker by calling: Phaiwo.Worker.start_link(arg)
       # {Phaiwo.Worker, arg}
     ]
