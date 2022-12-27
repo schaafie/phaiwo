@@ -1,24 +1,18 @@
 defmodule Phaiwo.Pred do
     use GenServer
-    require Logger
   
     @registry :world_registry
-    @initial_state %{entities: []}
   
     ## GenServer API
   
     def start_link(name) do
       GenServer.start_link(__MODULE__, name, name: via_tuple(name))
     end
-  
-    def log_state(process_name) do
-      process_name |> via_tuple() |> GenServer.call(:log_state)
-    end
-  
-    def add_player(process_name, player_name) do
-      process_name |> via_tuple() |> GenServer.call({:add_player, player_name})
-    end
-  
+    
+    def get(process_name), do: process_name |> via_tuple() |> GenServer.call(:get)
+    def action(process_name, action), do: process_name |> via_tuple() |> GenServer.cast({:do, action})
+    def tick(process_name), do: process_name |> via_tuple() |> GenServer.cast(:tick)
+
     @doc """
     This function will be called by the supervisor to retrieve the specification 
     of the child process.The child process is configured to restart only if it 
@@ -42,26 +36,28 @@ defmodule Phaiwo.Pred do
   
     @impl true
     def init(name) do
-      Logger.info("Starting process #{name}")
-      {:ok, @initial_state}
+      state = [] 
+      {:ok, state}
     end
-  
+
     @impl true
-    def handle_call(:log_state, _from, state) do
-      {:reply, "State: #{inspect(state)}", state}
+    def handle_call(:get, _from, state) do
+      new_state = action
+      {:reply, :ok, new_state}
     end
-  
+
     @impl true
-    def handle_call({:add_player, new_player}, _from, state) do
-      new_state =
-        Map.update!(state, :players, fn existing_players ->
-          [new_player | existing_players]
-        end)
-  
-      {:reply, :player_added, new_state}
+    def handle_cast(:tick, _from, state) do
+      new_state = state
+      {:noreply, new_state}
+    end
+
+    @impl true
+    def handle_cast({:do, action}, _from, state) do
+      new_state = action
+      {:noreply, new_state}
     end
   
     ## Private Functions
-    defp via_tuple(name),
-      do: {:via, Registry, {@registry, name}}
+    defp via_tuple(name), do: {:via, Registry, {@registry, name}}
   end
