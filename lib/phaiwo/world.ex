@@ -3,12 +3,28 @@ defmodule Phaiwo.World do
 
   # Client
 
-  def start_link(default) do
-    GenServer.start_link(__MODULE__, default)
+  def start_link(arg) do
+    GenServer.start_link(__MODULE__, arg, name: WorldServer)
   end
 
   def get_world!() do
-    GenServer.call()
+    GenServer.call( WorldServer, :get)
+  end
+
+  def get_details!(name) do
+    GenServer.call( WorldServer, {:get, name})
+  end
+
+  def left() do 
+    GenServer.cast( WorldServer, {:do, name, "left"} )
+  end
+
+  def right() do 
+    GenServer.cast( WorldServer, {:do, name, "right"} )
+  end
+
+  def move() do 
+    GenServer.cast( WorldServer, {:do, name, "move"} )
   end
 
   # Server (callbacks)
@@ -20,13 +36,18 @@ defmodule Phaiwo.World do
   end
 
   @impl true
-  def handle_call(:pop, _from, [head | tail]) do
-    {:reply, head, tail}
+  def handle_call(:get, _from, state) do
+    {:reply, state}
   end
 
   @impl true
-  def handle_cast({:push, element}, state) do
-    {:noreply, [element | state]}
+  def handle_call({:get, elementname}, _from, state) do
+    {:reply, state}
+  end
+
+  @impl true
+  def handle_cast({:do, elementname, action}, state) do
+    {:noreply, state}
   end
 
 end
