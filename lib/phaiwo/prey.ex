@@ -1,7 +1,5 @@
-defmodule Phaiwo.Pred do
+defmodule Phaiwo.Prey do
     use GenServer
-  
-    @registry :world_registry
   
     ## GenServer API
   
@@ -36,28 +34,25 @@ defmodule Phaiwo.Pred do
   
     @impl true
     def init(name) do
-      state = [] 
+      state = %{ name: name }
       {:ok, state}
     end
 
     @impl true
     def handle_call(:get, _from, state) do
-      new_state = action
-      {:reply, :ok, new_state}
+      {:reply, :ok, state}
     end
 
     @impl true
-    def handle_cast(:tick, _from, state) do
-      new_state = state
-      {:noreply, new_state}
+    def handle_cast(:tick, state) do
+      {:noreply, state}
     end
 
     @impl true
-    def handle_cast({:do, action}, _from, state) do
-      new_state = action
-      {:noreply, new_state}
+    def handle_cast({:do, action}, state) do
+      {:noreply, state}
     end
   
     ## Private Functions
-    defp via_tuple(name), do: {:via, Registry, {@registry, name}}
+    defp via_tuple(name), do: {:via, Registry, {:prey_registry, name}}
   end

@@ -14,10 +14,14 @@ defmodule Phaiwo.Application do
       {Phoenix.PubSub, name: Phaiwo.PubSub},
       # Start the Endpoint (http/https)
       PhaiwoWeb.Endpoint,
-      # Start the World Supervisor //  prey and predator elements
-      Phaiwo.WorldSupervisor
-      # Start a worker by calling: Phaiwo.Worker.start_link(arg)
-      # {Phaiwo.Worker, arg}
+      # Registries for prey and predator
+      {Registry, [keys: :unique, name: :pred_registry]},
+      {Registry, [keys: :unique, name: :prey_registry]},
+      # Start the World Supervisor 
+      # Supervises prey and predator elements
+      Phaiwo.WorldSupervisor,
+      # Start the World Server
+      { Phaiwo.WorldServer, %{ prey: 5, pred: 1} }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

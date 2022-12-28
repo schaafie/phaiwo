@@ -1,14 +1,16 @@
+import world from "./world.js";
+
 export default class game {
 
-    constructor(h, w) {
+    constructor(h, w, prey, pred) {
         this.height = h;
         this.width = w;
-        this.world = new world(this.width, this.height);
+        this.world = new world(this.width, this.height, prey, pred);
         console.log("initiated");
 
         let canvas = document.getElementById("map");
+        canvas.addEventListener("click",  (ev) => { this.world.setEntity( ev.pageX, ev.pageY); });
         this.ctx = canvas.getContext("2d");
-        this.draw();
     }
 
     draw() {
@@ -16,7 +18,8 @@ export default class game {
         let gra2rad = circum/360;
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        this.world.getAll().forEach(el => {
+        let entities = this.world.getAll();
+        entities.forEach(el => {
             this.ctx.beginPath();
             this.ctx.arc(el.x, el.y, el.s, 0, circum);
             this.ctx.fillStyle = el.c;
@@ -45,17 +48,17 @@ export default class game {
     }
 
     left() {
-        this.world.pred[0].turnleft();
+        // this.world.pred[0].turnleft();
         this.draw();
     }
 
     right() {
-        this.world.pred[0].turnright();
+        // this.world.pred[0].turnright();
         this.draw();
     }
 
     move() {
-        this.world.pred[0].move();
+        // this.world.pred[0].move();
         this.draw();
     }
 

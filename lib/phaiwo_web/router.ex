@@ -23,7 +23,8 @@ defmodule PhaiwoWeb.Router do
   scope "/api", PhaiwoWeb do
     pipe_through :api
 
-    get "/", WorldController, :index
+    post "/", WorldController, :create
+    get "/", WorldController, :get
     get "/details/:name", WorldController, :get_details
     put "/details/:name", WorldController, :change
 

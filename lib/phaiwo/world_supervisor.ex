@@ -9,7 +9,6 @@ defmodule Phaiwo.WorldSupervisor do
     end
   
     def start_child(type,name) do
-        # Shorthand to retrieve the child specification from the `child_spec/1
         child_specification = case type do
             "prey" ->
                 { Phaiwo.Prey, name }

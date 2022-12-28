@@ -1,11 +1,16 @@
 defmodule PhaiwoWeb.WorldController do
   use PhaiwoWeb, :controller
 
-  alias Phaiwo.World
-  
-  def index(conn, _params) do
-    worlds = World.list_worlds()
-    render(conn, "index.json", worlds: worlds)
+  alias Phaiwo.WorldServer
+
+  def create(conn, params) do
+    entities = WorldServer.create_world(params)
+    render(conn, "index.json", entities: entities)
+  end
+
+  def get(conn, _params) do
+    entities = WorldServer.get_world!()
+    render(conn, "index.json", entities: entities)
   end
 
 end
