@@ -3,10 +3,10 @@ import game from "./game.js";
 
 function run() {
     // Game parameters
-    let height      = 800;
-    let width       = 1000;
-    let predcount   = 1;
-    let preycount   = 5;
+    let height = 600;
+    let width = 800;
+    let predcount = 1;
+    let preycount = 5;
 
     document.getElementById("map").setAttribute("height", height + "px");
     document.getElementById("map").setAttribute("width", width + "px");
@@ -17,4 +17,4 @@ function run() {
     document.addEventListener('keydown', ev => { g.processKey(ev.code); });
 }
 
-document.addEventListener( "onload", run());
+document.addEventListener("onload", run());

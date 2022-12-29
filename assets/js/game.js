@@ -9,13 +9,13 @@ export default class game {
         console.log("initiated");
 
         let canvas = document.getElementById("map");
-        canvas.addEventListener("click",  (ev) => { this.world.setEntity( ev.pageX, ev.pageY); });
+        canvas.addEventListener("click", (ev) => { this.world.setEntityByLocation(ev.pageX, ev.pageY); });
         this.ctx = canvas.getContext("2d");
     }
 
     draw() {
         let circum = 2 * Math.PI;
-        let gra2rad = circum/360;
+        let gra2rad = circum / 360;
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         let entities = this.world.getAll();
@@ -30,17 +30,17 @@ export default class game {
             this.ctx.moveTo(el.x + xs, el.y + ys);
             this.ctx.lineTo(el.x + 1.5 * xs, el.y + 1.5 * ys);
             this.ctx.stroke();
-            if (el.t==2) {
-                for(let i=0;i<=20;i++) {
-                    if ( el.prey_vision[i] == 1 ) {
-                        document.getElementById( "pn" + i ).classList.add("active");
+            if (el.t == 2) {
+                for (let i = 0; i <= 20; i++) {
+                    if (el.prey_vision[i] == 1) {
+                        document.getElementById("pn" + i).classList.add("active");
                     } else {
-                        document.getElementById( "pn" + i ).classList.remove("active");
+                        document.getElementById("pn" + i).classList.remove("active");
                     }
-                    if ( el.pred_vision[i] == 1 ) {
-                        document.getElementById( "n" + i ).classList.add("active");
+                    if (el.pred_vision[i] == 1) {
+                        document.getElementById("n" + i).classList.add("active");
                     } else {
-                        document.getElementById( "n" + i ).classList.remove("active");
+                        document.getElementById("n" + i).classList.remove("active");
                     }
                 }
             }

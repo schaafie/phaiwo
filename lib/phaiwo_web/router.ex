@@ -25,8 +25,9 @@ defmodule PhaiwoWeb.Router do
 
     post "/", WorldController, :create
     get "/", WorldController, :get
-    get "/details/:name", WorldController, :get_details
+    get "/details", WorldController, :get_details
     put "/details/:name", WorldController, :change
+    put "/details/:x/:y", WorldController, :change
 
   end
 

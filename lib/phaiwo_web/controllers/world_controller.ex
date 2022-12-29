@@ -13,4 +13,17 @@ defmodule PhaiwoWeb.WorldController do
     render(conn, "index.json", entities: entities)
   end
 
+  def change(conn, args) do
+    case args do
+      %{"name" => name } ->
+        IO.puts "Change by name"
+      %{"x" =>  x, "y" => y} ->
+        IO.puts "Change by location"
+      _whatever ->
+        IO.puts "Error"
+    end
+
+    conn |> json(%{error: "unknown"}) |> halt()
+  end
+
 end
